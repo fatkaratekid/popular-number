@@ -4,7 +4,7 @@ import data_manager as dm
 
 
 @task
-def retrieve_numbers():
-	freqs = twrt.get_numbers(10000)
+def retrieve_numbers(tweet_limit=10):
+	freqs = twrt.get_numbers(tweet_limit)
 	dm.store_entry(freqs)
 

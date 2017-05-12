@@ -5,7 +5,7 @@ from collections import defaultdict
 import sys
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 number_counter = defaultdict(lambda:0)
 
@@ -25,7 +25,7 @@ def update_counter(numbers):
 
 class MyStreamListener(tweepy.StreamListener):
     def __init__(self, api=None, tweet_limit=10):
-        logging.info('Tweet limit in constructor is ' + str(tweet_limit))
+        logging.debug('Tweet limit in constructor is ' + str(tweet_limit))
         self.num_tweets = 0
         self.tweet_limit = tweet_limit
         super(MyStreamListener, self).__init__()
@@ -71,8 +71,8 @@ def get_numbers(tweet_limit=10):
     finally:
         myStream.disconnect()
 
-    logging.info("The sorted results:")
-    logging.info(sorted(number_counter.iteritems(), key=lambda key_value: int(key_value[1]), reverse=True))
-    logging.info("Bye :)")
+    logging.debug("The sorted results:")
+    logging.debug(sorted(number_counter.iteritems(), key=lambda key_value: int(key_value[1]), reverse=True))
+    logging.info("All good! Bye :)")
 
     return number_counter
