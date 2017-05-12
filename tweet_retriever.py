@@ -25,14 +25,14 @@ def update_counter(numbers):
 
 class MyStreamListener(tweepy.StreamListener):
     def __init__(self, api=None, tweet_limit=10):
-        logging.debug('Tweet limit in constructor is ' + str(tweet_limit))
         self.num_tweets = 0
-        self.tweet_limit = tweet_limit
+        self.tweet_limit = int(tweet_limit)
         super(MyStreamListener, self).__init__()
 
     def on_status(self, status):
         update_counter(extract_numbers(status.text))
         self.num_tweets += 1
+        logging.debug("total: " + str(self.num_tweets) + " | limit: " + str(self.tweet_limit) + " | condition:" + str(self.num_tweets >= self.tweet_limit))
 
         if self.num_tweets >= self.tweet_limit:
             logging.info("Retrieved " + str(self.num_tweets) + " tweets from Twitter") 
@@ -62,7 +62,6 @@ def get_numbers(tweet_limit=10):
     myStream = tweepy.Stream(auth=auth, listener=myStreamListener)
 
     try:
-        result = ''
         myStream.sample() #... stream printing out
         #ctrl+c to break
 
